@@ -6,6 +6,7 @@ import { AuthLoginDTO, authLoginSchema } from "@/schemas/auth.schema";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -16,6 +17,10 @@ import { Button } from "@/components/ui/button";
 import { authLoginUsecase } from "@/usecases/auth/login.usecase";
 import { AuthErrors } from "@/errors/auth.errors";
 import { toast } from "sonner";
+import Link from "next/link";
+
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export function LoginForm() {
     const form = useForm<AuthLoginDTO>({
@@ -25,6 +30,8 @@ export function LoginForm() {
             password: "",
         },
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (dto: AuthLoginDTO) => {
         const result = await authLoginUsecase(dto);
@@ -80,7 +87,30 @@ export function LoginForm() {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input type="password" {...field} />
+                                    <Input
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        placeholder="Password"
+                                        endContent={
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setShowPassword(
+                                                        !showPassword
+                                                    )
+                                                }
+                                                className="flex flex-col justify-center items-center"
+                                            >
+                                                {showPassword ? (
+                                                    <EyeOff className="size-4 text-muted-foreground" />
+                                                ) : (
+                                                    <Eye className="size-4 text-muted-foreground" />
+                                                )}
+                                            </button>
+                                        }
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -89,9 +119,24 @@ export function LoginForm() {
                 />
 
                 <Button type="submit" className="w-full">
-                    Login
+                    Sign In
                 </Button>
             </form>
+            <div className="py-4">
+                <div className="flex justify-center item-center">
+                    <FormDescription>
+                        No Account?
+                        <Link href="/register">
+                            <Button variant={"link"}>Create Account</Button>
+                        </Link>
+                    </FormDescription>
+                </div>
+                <div className="flex justify-center item-center">
+                    <Link href="/forgot-password">
+                        <Button variant="link">Forgot Password?</Button>
+                    </Link>
+                </div>
+            </div>
         </Form>
     );
 }

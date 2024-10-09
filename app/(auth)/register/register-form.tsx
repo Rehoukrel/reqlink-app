@@ -8,6 +8,7 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
+    FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthErrors } from "@/errors/auth.errors";
@@ -16,6 +17,9 @@ import { authRegisterUsecase } from "@/usecases/auth/register.usecase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 export function RegisterForm() {
     const form = useForm<AuthRegisterDTO>({
@@ -37,12 +41,14 @@ export function RegisterForm() {
         }
     };
 
+    const [showPassword, setShowPassword] = useState(false);
+
     return (
         <Form {...form}>
             <form
                 method="post"
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-6"
             >
                 <FormField
                     control={form.control}
@@ -87,7 +93,30 @@ export function RegisterForm() {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="password" />
+                                    <Input
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        placeholder="Password"
+                                        endContent={
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setShowPassword(
+                                                        !showPassword
+                                                    )
+                                                }
+                                                className="flex flex-col justify-center items-center"
+                                            >
+                                                {showPassword ? (
+                                                    <EyeOff className="size-4 text-muted-foreground" />
+                                                ) : (
+                                                    <Eye className="size-4 text-muted-foreground" />
+                                                )}
+                                            </button>
+                                        }
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -103,7 +132,30 @@ export function RegisterForm() {
                             <FormItem>
                                 <FormLabel>Confirm Password</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="password" />
+                                    <Input
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                        placeholder="Confirm Password"
+                                        endContent={
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setShowPassword(
+                                                        !showPassword
+                                                    )
+                                                }
+                                                className="flex flex-col justify-center items-center"
+                                            >
+                                                {showPassword ? (
+                                                    <EyeOff className="size-4 text-muted-foreground" />
+                                                ) : (
+                                                    <Eye className="size-4 text-muted-foreground" />
+                                                )}
+                                            </button>
+                                        }
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -115,6 +167,16 @@ export function RegisterForm() {
                     Register
                 </Button>
             </form>
+            <div className="pt-2">
+                <div className="flex justify-center item-center">
+                    <FormDescription>
+                        Already have an account?{" "}
+                        <Link href="/login">
+                            <Button variant={"link"}>Sign In Now !</Button>
+                        </Link>
+                    </FormDescription>
+                </div>
+            </div>
         </Form>
     );
 }
