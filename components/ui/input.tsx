@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { cn } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 
@@ -30,6 +31,7 @@ export interface InputProps
         React.InputHTMLAttributes<HTMLInputElement> {
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
+
     wrapperClassName?: string;
 }
 
@@ -37,6 +39,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     (
         {
             className,
+
             wrapperClassName,
             iconPosition = "none",
             defaultHeight,
@@ -47,6 +50,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         },
         ref
     ) => {
+
         const hasStartIcon = !!startIcon;
         const hasEndIcon = !!endIcon;
         const hasBothIcons = hasStartIcon && hasEndIcon;
@@ -61,12 +65,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     <span className="absolute inline-flex items-center justify-center text-muted-foreground top-1/2 -translate-y-1/2 ml-3.5">
                         {startIcon}
                     </span>
+
                 )}
 
                 <input
                     type={type}
                     className={cn(
+
                         inputVariants({ iconPosition, defaultHeight }),
+
                         className
                     )}
                     ref={ref}

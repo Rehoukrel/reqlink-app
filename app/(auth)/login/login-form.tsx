@@ -6,6 +6,7 @@ import { AuthLoginDTO, authLoginSchema } from "@/schemas/auth.schema";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -16,10 +17,17 @@ import { Button } from "@/components/ui/button";
 import { authLoginUsecase } from "@/usecases/auth/login.usecase";
 import { AuthErrors } from "@/errors/auth.errors";
 import { toast } from "sonner";
+
+
+
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { PasswordInput } from "@/components/password-input";
 import { MailIcon, KeyRoundIcon } from "lucide-react";
 import Link from "next/link";
+
 
 export function LoginForm() {
     const form = useForm<AuthLoginDTO>({
@@ -29,6 +37,8 @@ export function LoginForm() {
             password: "",
         },
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = async (dto: AuthLoginDTO) => {
         const result = await authLoginUsecase(dto);
@@ -135,5 +145,6 @@ export function LoginForm() {
                 </Form>
             </CardContent>
         </Card>
+
     );
 }

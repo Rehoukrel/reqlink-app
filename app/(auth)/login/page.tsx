@@ -1,7 +1,10 @@
 import { LoginForm } from "./login-form";
 
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+
 export default async function LoginPage() {
     return (
+
         <main className="min-h-screen grid grid-cols-5 relative">
             <div className="col-span-3 bg-slate-800">
                 <div className="py-32">
