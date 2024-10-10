@@ -8,10 +8,6 @@ const links = [
     { name: "documentation", href: "/documentation" },
     { name: "support", href: "/support" },
 ];
-const buttons = [
-    { name: "signin", href: "/signin" },
-    { name: "Register", href: "/register" },
-];
 
 const LandingNavbar = () => {
     return (
